@@ -25,7 +25,6 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to='products/')
     alert = models.PositiveIntegerField()
     Last_Edate = models.DateField()
@@ -60,6 +59,7 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     taxes = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2)
+    product = models.ManyToManyField(Product)
     date = models.DateField()
     qte = models.IntegerField()
 
@@ -91,7 +91,7 @@ class Stock(models.Model):
 class Facture(models.Model):
     date = models.DateField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ManyToManyField(Product)
     delivery_man = models.ForeignKey(DeliveryMan, on_delete=models.CASCADE)
 
     def _str_(self):
